@@ -20,10 +20,16 @@ after_success:
   - docker push kthrix/multi-nginx
   - docker push kthrix/multi-server
   - docker push kthrix/multi-worker
-#  - if [ "$TRAVIS_BRANCH" == "master" ]; then
-#    docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
-#    docker push kthrix/multi-client;
-#    docker push kthrix/multi-nginx;
-#    docker push kthrix/multi-server;
-#    docker push kthrix/multi-worker;
-#    fi
+
+deploy:
+    provider: elasticbeanstalk
+    region: 
+    app: multi-docker
+    env: MultiDocker-env
+    bucket_name:
+    bucket_path:
+    on:
+        branch: master
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key:
+        secure: $AWS_SECRET_KEY
